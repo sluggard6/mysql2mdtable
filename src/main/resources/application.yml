@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:mysql://sh-cynosdbmysql-grp-ep3srdzu.sql.tencentcdb.com:26162/taas?characterEncoding=utf8&useSSL=false
+    username: admin
+    password: admin@2021
