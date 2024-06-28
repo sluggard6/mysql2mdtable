@@ -9,6 +9,8 @@ import lombok.Data;
 public class Table {
 
     private String name;
+    
+    private String comment;
 
     private List<Column> fields;
 

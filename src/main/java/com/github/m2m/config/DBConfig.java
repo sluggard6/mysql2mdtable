@@ -1,7 +1,5 @@
 package com.github.m2m.config;
 
-import java.util.Properties;
-
 import javax.sql.DataSource;
 
 import org.apache.velocity.app.Velocity;

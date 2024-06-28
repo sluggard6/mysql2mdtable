@@ -1,0 +1,8 @@
+=== $head.$index.$table.comment
+$table.name
+|===
+|字段|类型|可空|说明
+#foreach($c in $table.fields)
+|$c.field|$c.type|$c.nullable|$c.comment
+#end
+|===

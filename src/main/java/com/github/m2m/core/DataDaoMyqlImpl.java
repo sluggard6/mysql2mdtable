@@ -34,9 +34,25 @@ public class DataDaoMyqlImpl extends JdbcTemplate implements DataDao, Applicatio
     }
 
 	@Override
-    public Table getTableInfo(String tableName) {
-        Table table = new Table();
-        table.setName(tableName);
+	public List<Table> showFullTables() {
+		List<Table> list = new ArrayList<>();
+        
+        query("show table status", new RowCallbackHandler() {
+            @Override
+            public void processRow(ResultSet rs) throws SQLException {
+            	Table table = new Table();
+            	table.setName(rs.getString("name"));
+            	table.setComment(rs.getString("comment"));
+            	list.add(table);
+            }
+        });
+        return list;
+	}
+
+
+	@Override
+    public List<Column> getTableInfo(String tableName) {
+        List<Column> list = new ArrayList<>();
         query(String.format("show full columns from %s;", tableName), new RowCallbackHandler() {
             @Override
             public void processRow(ResultSet rs) throws SQLException {
@@ -45,10 +61,10 @@ public class DataDaoMyqlImpl extends JdbcTemplate implements DataDao, Applicatio
                 column.setType(rs.getString("type"));
                 column.setNullable(rs.getString("null"));
                 column.setComment(rs.getString("comment"));
-                table.getFields().add(column);
+                list.add(column);
             }
         });
-        return table;
+        return list;
     }
 	
 	private static String getLength(String s) {

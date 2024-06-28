@@ -11,16 +11,25 @@ import org.springframework.stereotype.Component;
 import com.github.m2m.entity.Table;
 
 @Component
-public class MarkDownTablePrinter implements Printer<String> {
+public class VelocityPrinter implements Printer<String> {
 	
 	@Autowired
 	private VelocityEngine ve;
+	
+	private static final String DEFAULT_TEMPLATE = "table.vm";
 
 	@Override
 	public String print(Table table) {
-		Template t = ve.getTemplate("table.vm");
+		return print(table, DEFAULT_TEMPLATE);
+	}
+
+	@Override
+	public String print(Table table, String template, String... args) {
+		Template t = ve.getTemplate(template);
 	    VelocityContext ctx = new VelocityContext();
-	    ctx.put("columns", table.getFields());
+	    ctx.put("table", table);
+	    ctx.put("head", args[0]);
+	    ctx.put("index", args[1]);
 		StringWriter sw = new StringWriter();
 		t.merge(ctx, sw);
 		return sw.toString();

@@ -1,5 +1,7 @@
+$table.name - $table.comment
 |字段|类型|可空|说明|
 |--|--|--|--|
-#foreach($c in $columns)
+#foreach($c in $table.fields)
 |$c.field|$c.type|$c.nullable|$c.comment|
 #end
+---
